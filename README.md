@@ -37,7 +37,8 @@ Tenants receive a single monthly invoice.
 - `/client`: React frontend. Run `npm run dev` to start UI.
 - `/server`: Node/Express backend. Run `npm run dev` for the dev server.
 
-## 🤝 Collaboration Notes for [Friend's Name]
+## 🤝 Collaboration Notes for BackEnd
+
 
 - **API Base URL:** Please use `http://localhost:5000/api`.
 - **Database:** See `/server/prisma/schema.prisma` for the expected data models.
