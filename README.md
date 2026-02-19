@@ -4,11 +4,7 @@ KejaSmart is a full-stack MERN (TypeScript) application designed for the Kenyan 
 
 ## 🛠 Tech Stack
 
-- **Frontend:** React, Vite, Tailwind CSS (UI designed via Lovable)
-- **Backend:** Node.js, Express, TypeScript
-- **Database:** PostgreSQL (via Prisma ORM)
-- **Payments:** Safaricom Daraja API (STK Push)
-
+???
 ## 🏗 System Architecture & Key Logic
 
 ### 1. Unit & Tenant Lifecycle
@@ -37,8 +33,3 @@ Tenants receive a single monthly invoice.
 - `/client`: React frontend. Run `npm run dev` to start UI.
 - `/server`: Node/Express backend. Run `npm run dev` for the dev server.
 
-## 🤝 Collaboration Notes for [Friend's Name]
-
-- **API Base URL:** Please use `http://localhost:5000/api`.
-- **Database:** See `/server/prisma/schema.prisma` for the expected data models.
-- **Webhooks:** Ensure your local environment uses `ngrok` or similar to test M-Pesa callbacks.
