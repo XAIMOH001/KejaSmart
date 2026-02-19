@@ -1,35 +1,78 @@
-# KejaSmart - Property Management System 🚀
 
-KejaSmart is a full-stack MERN (TypeScript) application designed for the Kenyan rental market. It streamlines property management, automated billing, and M-Pesa integration.
 
-## 🛠 Tech Stack
+# KejaSmart: Property Management System
 
-???
-## 🏗 System Architecture & Key Logic
+KejaSmart is a comprehensive property management platform designed specifically for the Kenyan rental market. It streamlines the lifecycle of property management through automated billing, bulk unit generation, and integrated M-Pesa payment reconciliation.
 
-### 1. Unit & Tenant Lifecycle
+## Project Overview
 
-- **Batch Creation:** Landlords can auto-generate units (e.g., A101-A110) in one click.
-- **Tenant Onboarding:** Linked via **Phone Number Matching**. No invite codes needed—if a tenant signs up with a number pre-registered to a unit, they are auto-linked.
-- **Vacating:** Units are "permanent," while Tenants are "occupants." Vacating a tenant archives their history and marks the unit as `Vacant`.
+This repository follows a full-stack architecture optimized for high-volume residential and commercial buildings.
 
-### 💸 2. Consolidated Billing System
+* **Frontend:** React.js and Tailwind CSS.
+* **Backend:** Scalable API layer [Partner Tech Stack Placeholder].
+* **Payments:** Safaricom Daraja API (STK Push).
+* **Database:** Relational PostgreSQL/MySQL with optimized indexing.
 
-Tenants receive a single monthly invoice.
+---
 
-- `Total Invoice = Base Rent + Fixed Utilities (Trash/Security) + Variable Utilities (Water/Electricity)`.
-- Support for **Partial Payments**: The dashboard tracks `Remaining Balance`.
+## User Journeys and Features
 
-### 📲 3. M-Pesa Integration Flow (STK Push)
+### Landlord Workflow
 
-1. Frontend triggers `POST /api/payments/stk-push`.
-2. Backend communicates with Daraja API.
-3. Tenant receives STK PIN Prompt on their phone.
-4. Safaricom sends Callback to our Webhook.
-5. Backend updates `Payment` status and reconciles the `Invoice` balance.
+The Landlord interface focuses on administrative scale and real-time financial tracking.
 
-## 📂 Project Structure
+* **Property Management:** Setup wizards to define property metadata, locations, and amenities.
+* **Batch Unit Generation:** Logic-based generation for large buildings. Supports alpha-numeric naming patterns (e.g., A101 to E520) to eliminate manual entry for up to 100+ units.
+* **Occupancy Lifecycle:** Tools to assign tenants to specific units via phone numbers and a "Vacate" function to archive historical data while resetting unit availability.
+* **Consolidated Billing:** A centralized interface to input variable utility costs (Water/Electricity). Landlords can publish consolidated invoices to all tenants simultaneously.
+* **Financial Analytics:** Real-time dashboard showing KES collected, pending balances, and occupancy percentages.
 
-- `/client`: React frontend. Run `npm run dev` to start UI.
-- `/server`: Node/Express backend. Run `npm run dev` for the dev server.
+### Tenant Workflow
+
+The Tenant portal is designed for frictionless payment and transparent account management.
+
+* **Automated Onboarding:** Phone-number-based authentication that automatically links the tenant to their assigned unit upon registration.
+* **Simplified Payments:** Integration of "Lipa na M-Pesa" STK Push, allowing tenants to trigger payment prompts directly to their mobile devices.
+* **Financial Transparency:** A complete Statement of Account (SOA) showing a running ledger of charges, partial payments, and total balance.
+* **Receipt Management:** Automated generation of digital receipts for every successful transaction.
+
+---
+
+## Technical Specifications
+
+### Database Schema
+
+The database is structured to ensure referential integrity and support partial payment logic.
+
+| Table | Primary Responsibility |
+| --- | --- |
+| **Users** | Core identity and role-based access control (Admin, Landlord, Tenant). |
+| **Properties** | Metadata for buildings owned by Landlords. |
+| **Units** | Specific room/unit details linked to Properties. |
+| **Tenants** | Link table managing active occupancy and running balances. |
+| **Invoices** | Itemized monthly bills (Rent + Trash + Water + Security). |
+| **Payments** | Audit trail for M-Pesa transactions and reconciliation status. |
+
+**Database Optimization:**
+
+* B-Tree indexes on `Users(phone_number)` and `Tenants(unit_id)`.
+* Unique constraints on `Payments(mpesa_receipt)` to prevent duplicate reconciliation.
+
+### API Architecture
+
+The Backend is required to support the following key functional endpoints:
+
+* **Authentication:** `POST /api/auth/register` and `POST /api/auth/login`.
+* **Property Management:** `POST /api/units/batch` for high-volume unit creation.
+* **Billing Engine:** `POST /api/billing/generate` to process monthly charges across a property.
+* **Payment Integration:** `POST /api/payments/stk-push` for transaction initiation and `/api/payments/callback` for asynchronous M-Pesa webhook processing.
+
+---
+
+## Implementation Notes
+
+* **Partial Payments:** The system architecture supports installment-based payments. The `Remaining Balance` is calculated dynamically after every confirmed transaction.
+* **Manual Reconciliation:** A secondary flow exists to allow tenants to claim payments via M-Pesa Transaction IDs in the event of STK Push delays.
+
+---
 
