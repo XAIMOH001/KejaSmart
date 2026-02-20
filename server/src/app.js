@@ -1,11 +1,13 @@
 import e from "express";
 import landingRoutes from './routes/landingRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 const app = e();
 
 app.use(e.json());
 
 app.use('/',landingRoutes);
+app.use('/api/auth',authRoutes);
 
 app.use((err,req,res)=>{
     console.error(err.stack);
