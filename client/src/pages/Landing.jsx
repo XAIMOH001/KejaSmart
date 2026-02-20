@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Building, Shield, BarChart3, Smartphone, ArrowRight, CheckCircle, Phone } from "lucide-react";
 
-// ✅ Fixed paths to match your src/components/ui/ folder structure
+
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
@@ -17,7 +17,6 @@ const features = [
 
 const Landing = () => {
   const navigate = useNavigate();
-  // ✅ Removed TypeScript types
   const [loginRole, setLoginRole] = useState("landlord");
   const [isSignup, setIsSignup] = useState(false);
   const [tenantPhone, setTenantPhone] = useState("");
