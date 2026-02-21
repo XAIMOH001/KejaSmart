@@ -129,3 +129,41 @@ export const login = async(req,res)=>{
         })
     }
 }
+
+
+export const getProfile = async (req,res)=>{
+    try {
+        const userId = req.user.id;
+
+        const results = await pool.query(
+            "SELECT full_name,email, user_type, updated_at FROM users WHERE id=$1",[userId]
+        );
+
+        if(results.rows.length == 0){
+            return res.status(404).json({
+                success:false,
+                error:'User not found'
+            });
+        }
+        
+        const user = results.rows[0];
+
+        res.status(200).json({
+            message:"Profile returned successfully",
+            success:true,
+            profile:{
+                id:user.id,
+                name:user.full_name,
+                email:user.email,
+                userType:user.user_type,
+                updatedAt:user.updated_at
+            }
+        });
+    } catch (err) {
+        console.error("Error getting profiele", err.message);
+        res.status(500).json({
+            success: false,
+            error: err.message
+    });
+    }
+}
